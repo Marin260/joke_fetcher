@@ -1,0 +1,12 @@
+node_modules/
+build/
+
+.npm
+
+.eslintcache
+
+*.tgz
+
+.env
+
+.vscode-test
