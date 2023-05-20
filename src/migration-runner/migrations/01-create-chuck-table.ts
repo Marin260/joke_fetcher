@@ -1,5 +1,5 @@
 export const create_chuck_table = `
-CREATE TABLE chuck_user (
+CREATE TABLE IF NOT EXISTS chuck_user (
 	id				SERIAL PRIMARY KEY,
 	first_name		varchar(20) NOT NULL,
 	last_name		varchar(40)	NOT NULL,
