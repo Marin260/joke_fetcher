@@ -35,7 +35,15 @@ export class ChuckNorrisController {
   async test(req: Request, res: Response) {
     console.log('ChuckNorrisController::test() - Enter');
     // db health-check
-    await db().authenticate();
+
+    try {
+      await db().authenticate();
+    } catch (error) {
+      console.log(
+        'ChuckNorrisController::test() - Error: db connection problem'
+      );
+      return res.status(500).json({ error: 'db connection problem' });
+    }
 
     // perform other checks if needed...
 
