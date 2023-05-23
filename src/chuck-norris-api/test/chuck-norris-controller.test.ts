@@ -23,6 +23,7 @@ describe('ChuckNorrisController tests', () => {
   });
 
   // TODO: mock database fail in health check...
+  // test comment
   test('GET /chuck-norris/', async () => {
     const response = await chuckApi.get(
       mockRequest({
