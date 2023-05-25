@@ -13,6 +13,9 @@ export class ChuckNorrisController {
     console.log('ChuckNorrisController::get() - Enter');
     const { authenticatedUser } = req.body;
 
+    if (!authenticatedUser) throw new Error('No authenticated user');
+    // check for user in DB?
+
     // fetch joke
     const fetchChuckNorrisJoke = await fetch(
       'https://api.chucknorris.io/jokes/random'
