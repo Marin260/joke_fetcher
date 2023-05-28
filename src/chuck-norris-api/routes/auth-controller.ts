@@ -59,7 +59,11 @@ export class AuthController {
     console.log('AuthController::authenticate() - Enter');
 
     const { email, password } = req.body;
-    if (!(await checkPassword(email, password)))
+
+    const user = await ChuckUser.findOne({ where: { email: email } });
+
+    if (!user) return res.status(400).json({ error: 'wrong username' });
+    if (!(await checkPassword(user, password)))
       return res.status(400).json({ error: 'wrong password' });
 
     const token = createJWT(email);
@@ -84,15 +88,13 @@ const hashUserPassword = (password: string) => {
   return { salt, hash };
 };
 
-const checkPassword = async (email: string, password: string) => {
-  const user = (await ChuckUser.findOne({ where: { email: email } }))
-    ?.dataValues;
-
+const checkPassword = async (user: ChuckUser, inputPassword: string) => {
+  const { salt, password } = user.dataValues;
   const inputHash = crypto
-    .pbkdf2Sync(password, user?.salt, 1000, 128, 'sha512')
+    .pbkdf2Sync(inputPassword, salt, 1000, 128, 'sha512')
     .toString('hex');
 
-  return inputHash === user?.password;
+  return inputHash === password;
 };
 
 const createJWT = (user: string) => {
