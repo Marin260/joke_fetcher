@@ -6,27 +6,28 @@ import {
   Unique,
   DataType,
 } from 'sequelize-typescript';
+import { InferAttributes } from 'sequelize';
 
 @Table({ tableName: 'chuck_user', timestamps: false, underscored: true })
-export class ChuckUser extends Model {
+export class ChuckUser extends Model<InferAttributes<ChuckUser>> {
   @AllowNull(false)
   @Column(DataType.STRING)
-  firstName!: string;
+  declare firstName: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  lastName!: string;
+  declare lastName: string;
 
   @AllowNull(false)
   @Unique(true)
   @Column(DataType.STRING)
-  email!: string;
+  declare email: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  salt!: string;
+  declare salt: string;
 
   @AllowNull(false)
   @Column(DataType.STRING)
-  password!: string;
+  declare password: string;
 }
